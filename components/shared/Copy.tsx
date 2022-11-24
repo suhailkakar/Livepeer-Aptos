@@ -2,7 +2,9 @@ import React from "react";
 
 export default function Copy({ text }: { text: string | null }) {
   const copy = () => {
-    navigator.clipboard.writeText(text);
+    if (text) {
+      navigator.clipboard.writeText(text);
+    }
   };
   return (
     <div className="ml-2 hover:cursor-pointer" onClick={copy}>
