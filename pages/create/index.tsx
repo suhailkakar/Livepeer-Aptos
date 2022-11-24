@@ -108,18 +108,8 @@ export default function Create() {
             <div className="flex flex-row mt-4 justify-between">
               <div className="w-[42%]">
                 <Input
-                  label="Asset address"
-                  placeholder="0x..."
-                  onChange={(e) => setAssetAddress(e.target.value)}
-                  disabled={aptosTokenAmount ? true : false}
-                />
-              </div>
-              <p className="text-zinc-400 mt-10">and/or</p>
-              <div className="w-[42%]">
-                <Input
                   label="Amount of Aptos token"
-                  placeholder="20 Aptos"
-                  disabled={assetAddress ? true : false}
+                  placeholder="20"
                   onChange={(e) => setAptosTokenAmount(e.target.value)}
                 />
               </div>
