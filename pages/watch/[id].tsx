@@ -37,7 +37,9 @@ export default function Create() {
 
   const checkAssets = (address: string | null) => {
     return axios
-      .get(`${process.env.NEXT_PUBLIC_TOPAZ_API}/profile-data?owner=${address}`)
+      .get(
+        `${process.env.NEXT_PUBLIC_TOPAZ_API}/profile-data?owner=${account?.address}`
+      )
       .then(({ data }) => {
         const assets = data?.data;
         if (assets.length > 0) {
