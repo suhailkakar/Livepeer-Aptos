@@ -30,7 +30,9 @@ export default function Create() {
       playbackId: id,
       secret: account?.address,
     };
+    console.log(body);
     const { data } = await axios.post("/api/jwt/create", body);
+    console.log(data);
     setJwt(data.token);
     play(true);
   };
