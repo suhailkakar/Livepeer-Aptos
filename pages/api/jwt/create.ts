@@ -22,8 +22,6 @@ export default async function handler(
     return res.status(400).json({ message: "Missing required fields" });
   }
 
-  console.log("Creating JWT for playbackId", playbackId);
-
   const token = await signAccessJwt({
     privateKey: accessControl.privateKey,
     publicKey: accessControl.publicKey,
