@@ -21,6 +21,7 @@ export default function ConnectWallet({}: {}) {
               </h2>
               {wallets.map((wallet) => (
                 <div
+                  key={wallet.adapter.name}
                   onClick={() => connectWallet(wallet)}
                   className="p-3 bg-[#151718] border border-zinc-800 rounded-lg shadow-sm mt-4 flex flex-row hover:cursor-pointer"
                 >
