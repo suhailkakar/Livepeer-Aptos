@@ -1,9 +1,18 @@
 import React from "react";
+import toast from "react-hot-toast";
 
 export default function Copy({ text }: { text: string | null }) {
   const copy = () => {
     if (text) {
       navigator.clipboard.writeText(text);
+      toast("Copied to clipboard!", {
+        icon: "📋",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
     }
   };
   return (

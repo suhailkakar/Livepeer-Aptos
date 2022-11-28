@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { Stream } from "../../types/index";
 import ReactLoading from "react-loading";
+import ConnectWallet from "../../components/ConnectWallet";
 
 export default function Create() {
   const { wallets, connect, account } = useWallet();
@@ -107,50 +108,59 @@ export default function Create() {
 
   useEffect(() => {
     setIsLoading(true);
-    if (!account) {
-      connect(wallets[0].adapter.name);
-    } else {
-      Promise.all([checkBalance()]);
+    console.log(account);
+    if (account?.address) {
+      checkBalance();
     }
   }, [account?.address]);
 
   return (
     <Page>
       <Nav account={account} />
-      {isLoading ? (
-        <div className="flex flex-col mt-60 justify-center items-center">
-          <ReactLoading type="spinningBubbles" color="#0DF6F7" width={80} />
-          <p className="mt-12 text-zinc-400">Authenticating, please wait.</p>
-        </div>
+      {!account?.address ? (
+        <>
+          <ConnectWallet />
+        </>
       ) : (
-        <div className="flex flex-col mt-40 justify-center items-center">
-          {canWatch ? (
-            <div className="w-1/2">
-              <Player
-                title={stream?.streamName}
-                showPipButton
-                jwt={jwt}
-                playbackId={stream?.playbackId}
-              />
+        <>
+          {isLoading ? (
+            <div className="flex flex-col mt-60 justify-center items-center">
+              <ReactLoading type="spinningBubbles" color="#0DF6F7" width={80} />
+              <p className="mt-12 text-zinc-400">
+                Authenticating, please wait.
+              </p>
             </div>
           ) : (
-            <>
-              <p className="text-zinc-400 max-w-[70%] text-center">
-                Oops, you need to have minimum{" "}
-                <span className="text-primary">
-                  {stream?.requirements.isAptosToken &&
-                    stream?.requirements.aptosTokenAmount + " APTOS token "}
-                  {stream?.requirements?.isAptosToken &&
-                    stream?.requirements?.isAssetAddress &&
-                    "and"}{" "}
-                  {stream?.requirements.isAssetAddress &&
-                    stream?.requirements.assetAddress + " Asset "}
-                </span>
-                to watch this stream.
-              </p>
-            </>
+            <div className="flex flex-col mt-40 justify-center items-center">
+              {canWatch ? (
+                <div className="w-1/2">
+                  <Player
+                    title={stream?.streamName}
+                    showPipButton
+                    jwt={jwt}
+                    playbackId={stream?.playbackId}
+                  />
+                </div>
+              ) : (
+                <>
+                  <p className="text-zinc-400 max-w-[70%] text-center">
+                    Oops, you need to have minimum{" "}
+                    <span className="text-primary">
+                      {stream?.requirements.isAptosToken &&
+                        stream?.requirements.aptosTokenAmount + " APTOS token "}
+                      {stream?.requirements?.isAptosToken &&
+                        stream?.requirements?.isAssetAddress &&
+                        "and"}{" "}
+                      {stream?.requirements.isAssetAddress &&
+                        stream?.requirements.assetAddress + " Asset "}
+                    </span>
+                    to watch this stream.
+                  </p>
+                </>
+              )}
+            </div>
           )}
-        </div>
+        </>
       )}
     </Page>
   );
